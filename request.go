@@ -382,12 +382,12 @@ func (r *Request) request(method, url string, data ...interface{}) (*Response, e
 	if err != nil {
 		return nil, err
 	}
+	req.Close = true
 
 	r.initHeaders(req)
 	r.initCookies(req)
 	r.initBasicAuth(req)
-
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := r.cli.Do(req)
 	if err != nil {
 		return nil, err
 	}
